@@ -59,4 +59,11 @@ public interface IMainPresenter extends IBasePresenter {
      * @param enable true开启; false关闭
      */
     void enableFlashService(Context context, boolean enable);
+
+    /**
+     * 来电闪服务是否正在运行
+     *
+     * @return true则正在运行; 否则false
+     */
+    boolean isFlashServiceRunning();
 }

@@ -30,6 +30,7 @@ import cn.fantasymaker.callflasher.base.IBaseView;
 import cn.fantasymaker.callflasher.functions.main.FlashService;
 import cn.fantasymaker.callflasher.functions.main.view.IMainView;
 import cn.fantasymaker.callflasher.util.FlashlightUtil;
+import cn.fantasymaker.callflasher.util.ServiceUtil;
 
 /**
  * Created :  2016-08-16
@@ -97,5 +98,10 @@ public class MainPresenter implements IMainPresenter {
             mMainView.showSnackMessage("关闭来电闪光功能");
             context.stopService(intent);
         }
+    }
+
+    @Override
+    public boolean isFlashServiceRunning() {
+        return ServiceUtil.isServiceRunning(FlashService.class);
     }
 }

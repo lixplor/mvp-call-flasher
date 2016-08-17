@@ -54,17 +54,21 @@ public class MainActivity extends BaseActivity implements IMainView {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    //先闪两下提示用户, 如权限被拦截可帮助调起权限授权供用户允许
-                    mBasePresenter.alertFlash();
+                    if (!mBasePresenter.isFlashServiceRunning()) {
+                        mBasePresenter.alertFlash(); //先闪两下提示用户, 如权限被拦截可帮助调起权限授权供用户允许
+                        mBasePresenter.enableFlashService(MainActivity.this, isChecked);
+                    }
+                } else {
+                    mBasePresenter.enableFlashService(MainActivity.this, isChecked);
                 }
-                mBasePresenter.enableFlashService(MainActivity.this, isChecked);
             }
         });
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-
+        boolean isFlashServiceRunning = mBasePresenter.isFlashServiceRunning();
+        mSwitchEnableFlash.setChecked(isFlashServiceRunning);
     }
 
 
