@@ -35,14 +35,14 @@ public class FlashlightUtil {
     private static Camera sCamera;
     public static boolean sState;
 
-    public static void turnFlashLight(boolean on) {
+    public static boolean turnFlashLight(boolean on) {
         sState = on;
         if (sCamera == null) {
             try {
                 sCamera = Camera.open();
             } catch (Exception e) {
                 e.printStackTrace();
-                return;
+                return false;
             }
         }
         Camera.Parameters parameters = sCamera.getParameters();
@@ -55,6 +55,7 @@ public class FlashlightUtil {
                 sCamera.setParameters(parameters);
             }
         }
+        return true;
     }
 
     public static void release() {

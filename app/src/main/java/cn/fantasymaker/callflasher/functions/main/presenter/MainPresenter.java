@@ -55,9 +55,11 @@ public class MainPresenter implements IMainPresenter {
 
     @Override
     public void enableFlashlight(boolean enable) {
-        FlashlightUtil.turnFlashLight(enable);
-        if (!enable) {
+        boolean success = FlashlightUtil.turnFlashLight(enable);
+        if (success && !enable) {
             FlashlightUtil.release();
+        } else {
+            // TODO: 16/8/17 主线程提示用户无法打开相机闪光灯
         }
         String state = enable ? "开启" : "关闭";
         mMainView.showSnackMessage("手电筒" + state);
@@ -70,13 +72,17 @@ public class MainPresenter implements IMainPresenter {
             public void run() {
                 boolean on = true;
                 for (int i = 0; i < 4; i++) {
-                    FlashlightUtil.turnFlashLight(on);
-                    if (on) {
-                        SystemClock.sleep(10);
+                    boolean success = FlashlightUtil.turnFlashLight(on);
+                    if (success) {
+                        if (on) {
+                            SystemClock.sleep(10);
+                        } else {
+                            SystemClock.sleep(50);
+                        }
+                        on = !on;
                     } else {
-                        SystemClock.sleep(50);
+                        // TODO: 16/8/17 主线程提示用户无法打开相机闪光灯
                     }
-                    on = !on;
                 }
                 FlashlightUtil.turnFlashLight(false);
                 FlashlightUtil.release();
