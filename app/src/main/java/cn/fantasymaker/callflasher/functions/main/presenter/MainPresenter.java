@@ -88,7 +88,7 @@ public class MainPresenter implements IMainPresenter {
     }
 
     @Override
-    public void enablePhoneStateListeningService(Context context, boolean enable) {
+    public void enableFlashService(Context context, boolean enable) {
         Intent intent = new Intent(context, FlashService.class);
         if (enable) {
             mMainView.showSnackMessage("开启来电闪光功能");

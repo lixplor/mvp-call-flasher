@@ -58,5 +58,5 @@ public interface IMainPresenter extends IBasePresenter {
      *
      * @param enable true开启; false关闭
      */
-    void enablePhoneStateListeningService(Context context, boolean enable);
+    void enableFlashService(Context context, boolean enable);
 }
