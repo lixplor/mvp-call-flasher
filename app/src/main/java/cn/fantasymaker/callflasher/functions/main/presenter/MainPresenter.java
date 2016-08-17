@@ -31,6 +31,7 @@ import cn.fantasymaker.callflasher.functions.main.FlashService;
 import cn.fantasymaker.callflasher.functions.main.view.IMainView;
 import cn.fantasymaker.callflasher.util.FlashlightUtil;
 import cn.fantasymaker.callflasher.util.ServiceUtil;
+import cn.fantasymaker.callflasher.util.SharedpreferencesUtil;
 
 /**
  * Created :  2016-08-16
@@ -60,11 +61,6 @@ public class MainPresenter implements IMainPresenter {
         }
         String state = enable ? "开启" : "关闭";
         mMainView.showSnackMessage("手电筒" + state);
-    }
-
-    @Override
-    public void enableFlashOnCall(boolean enable) {
-
     }
 
     @Override
@@ -103,5 +99,15 @@ public class MainPresenter implements IMainPresenter {
     @Override
     public boolean isFlashServiceRunning() {
         return ServiceUtil.isServiceRunning(FlashService.class);
+    }
+
+    @Override
+    public boolean isBootRun() {
+        return SharedpreferencesUtil.getBoolean("isBootRun", false);
+    }
+
+    @Override
+    public void setBootRun(boolean isBootRun) {
+        SharedpreferencesUtil.putBoolean("isBootRun", isBootRun);
     }
 }

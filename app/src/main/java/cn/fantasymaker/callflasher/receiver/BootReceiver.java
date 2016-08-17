@@ -20,57 +20,28 @@
  *     SOFTWARE.
  */
 
-package cn.fantasymaker.callflasher.functions.main.presenter;
+package cn.fantasymaker.callflasher.receiver;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 
-import cn.fantasymaker.callflasher.base.IBasePresenter;
+import cn.fantasymaker.callflasher.functions.main.FlashService;
+import cn.fantasymaker.callflasher.util.ServiceUtil;
 
 /**
- * Created :  2016-08-16
+ * Created :  2016-08-17
  * Author  :  Fantasymaker
  * Web     :  http://blog.fantasymaker.cn
  * Email   :  me@fantasymaker.cn
  */
-public interface IMainPresenter extends IBasePresenter {
-
-    /**
-     * 开启/关闭闪光灯常亮
-     *
-     * @param enable true开启; 否则false
-     */
-    void enableFlashlight(boolean enable);
-
-    /**
-     * 闪烁提醒
-     */
-    void alertFlash();
-
-    /**
-     * 开启/关闭来电状态监听的前台服务
-     *
-     * @param enable true开启; false关闭
-     */
-    void enableFlashService(Context context, boolean enable);
-
-    /**
-     * 来电闪服务是否正在运行
-     *
-     * @return true则正在运行; 否则false
-     */
-    boolean isFlashServiceRunning();
-
-    /**
-     * 是否开机自动运行
-     *
-     * @return true则自动运行; 否则false
-     */
-    boolean isBootRun();
-
-    /**
-     * 设置是否开机启动
-     *
-     * @param isBootRun true则开机启动; 否则false
-     */
-    void setBootRun(boolean isBootRun);
+public class BootReceiver extends BroadcastReceiver {
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        if (Intent.ACTION_BOOT_COMPLETED.equalsIgnoreCase(intent.getAction())
+                && !ServiceUtil.isServiceRunning(FlashService.class)) {
+            Intent flashServiceIntent = new Intent(context, FlashService.class);
+            context.startService(flashServiceIntent);
+        }
+    }
 }
