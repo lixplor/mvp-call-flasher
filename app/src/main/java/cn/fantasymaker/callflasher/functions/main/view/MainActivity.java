@@ -13,6 +13,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.fantasymaker.callflasher.R;
 import cn.fantasymaker.callflasher.base.BaseActivity;
+import cn.fantasymaker.callflasher.functions.main.model.MainModel;
 import cn.fantasymaker.callflasher.functions.main.presenter.IMainPresenter;
 import cn.fantasymaker.callflasher.functions.main.presenter.MainPresenter;
 import cn.fantasymaker.callflasher.util.FlashlightUtil;
@@ -39,7 +40,7 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     @Override
     protected void bindView() {
-        mMainPresenter = new MainPresenter();
+        mMainPresenter = new MainPresenter(new MainModel());
         mMainPresenter.bindView(this);
     }
 

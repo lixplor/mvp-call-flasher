@@ -28,10 +28,9 @@ import android.os.SystemClock;
 
 import cn.fantasymaker.callflasher.base.IBaseView;
 import cn.fantasymaker.callflasher.functions.main.FlashService;
+import cn.fantasymaker.callflasher.functions.main.model.IMainModel;
 import cn.fantasymaker.callflasher.functions.main.view.IMainView;
 import cn.fantasymaker.callflasher.util.FlashlightUtil;
-import cn.fantasymaker.callflasher.util.ServiceUtil;
-import cn.fantasymaker.callflasher.util.SharedpreferencesUtil;
 
 /**
  * Created :  2016-08-16
@@ -42,6 +41,11 @@ import cn.fantasymaker.callflasher.util.SharedpreferencesUtil;
 public class MainPresenter implements IMainPresenter {
 
     private IMainView mMainView;
+    private IMainModel mMainModel;
+
+    public MainPresenter(IMainModel iMainModel) {
+        mMainModel = iMainModel;
+    }
 
     @Override
     public void bindView(IBaseView v) {
@@ -104,16 +108,16 @@ public class MainPresenter implements IMainPresenter {
 
     @Override
     public boolean isFlashServiceRunning() {
-        return ServiceUtil.isServiceRunning(FlashService.class);
+        return mMainModel.isFlashServiceRunning();
     }
 
     @Override
     public boolean isBootRun() {
-        return SharedpreferencesUtil.getBoolean("isBootRun", false);
+        return mMainModel.isBootRun();
     }
 
     @Override
     public void setBootRun(boolean isBootRun) {
-        SharedpreferencesUtil.putBoolean("isBootRun", isBootRun);
+        mMainModel.setBootRun(isBootRun);
     }
 }
