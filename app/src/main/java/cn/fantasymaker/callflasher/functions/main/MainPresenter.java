@@ -20,16 +20,16 @@
  *     SOFTWARE.
  */
 
-package cn.fantasymaker.callflasher.functions.main.presenter;
+package cn.fantasymaker.callflasher.functions.main;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.SystemClock;
 
 import cn.fantasymaker.callflasher.base.BasePresenterImpl;
-import cn.fantasymaker.callflasher.functions.main.FlashService;
-import cn.fantasymaker.callflasher.functions.main.model.IMainModel;
-import cn.fantasymaker.callflasher.functions.main.view.IMainView;
+import cn.fantasymaker.callflasher.functions.main.MainContract.IMainPresenter;
+import cn.fantasymaker.callflasher.functions.main.MainContract.IMainView;
+import cn.fantasymaker.callflasher.functions.main.MainContract.IMainModel;
 import cn.fantasymaker.callflasher.util.FlashlightUtil;
 
 /**

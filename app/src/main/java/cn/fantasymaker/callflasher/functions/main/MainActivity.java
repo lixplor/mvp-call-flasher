@@ -1,4 +1,4 @@
-package cn.fantasymaker.callflasher.functions.main.view;
+package cn.fantasymaker.callflasher.functions.main;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,8 +13,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.fantasymaker.callflasher.R;
 import cn.fantasymaker.callflasher.base.BaseActivity;
-import cn.fantasymaker.callflasher.functions.main.model.MainModel;
-import cn.fantasymaker.callflasher.functions.main.presenter.MainPresenter;
+import cn.fantasymaker.callflasher.functions.main.MainContract.IMainView;
 import cn.fantasymaker.callflasher.util.FlashlightUtil;
 
 public class MainActivity extends BaseActivity<MainActivity, MainPresenter> implements IMainView {

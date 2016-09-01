@@ -12,7 +12,7 @@
     android:orientation="vertical"
     android:background="#FFC107"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".functions.main.view.MainActivity"
+    tools:context=".functions.main.MainActivity"
     tools:showIn="@layout/activity_main">
 
     <TextView
