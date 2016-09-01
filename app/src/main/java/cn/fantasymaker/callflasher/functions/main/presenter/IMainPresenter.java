@@ -24,15 +24,13 @@ package cn.fantasymaker.callflasher.functions.main.presenter;
 
 import android.content.Context;
 
-import cn.fantasymaker.callflasher.base.IBasePresenter;
-
 /**
  * Created :  2016-08-16
  * Author  :  Fantasymaker
  * Web     :  http://blog.fantasymaker.cn
  * Email   :  me@fantasymaker.cn
  */
-public interface IMainPresenter extends IBasePresenter {
+public interface IMainPresenter {
 
     /**
      * 开启/关闭闪光灯常亮

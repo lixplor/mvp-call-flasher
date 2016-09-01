@@ -14,11 +14,10 @@ import butterknife.OnClick;
 import cn.fantasymaker.callflasher.R;
 import cn.fantasymaker.callflasher.base.BaseActivity;
 import cn.fantasymaker.callflasher.functions.main.model.MainModel;
-import cn.fantasymaker.callflasher.functions.main.presenter.IMainPresenter;
 import cn.fantasymaker.callflasher.functions.main.presenter.MainPresenter;
 import cn.fantasymaker.callflasher.util.FlashlightUtil;
 
-public class MainActivity extends BaseActivity implements IMainView {
+public class MainActivity extends BaseActivity<MainActivity, MainPresenter> implements IMainView {
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -31,22 +30,14 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     private Snackbar mSnackbar;
 
-    private IMainPresenter mMainPresenter;
-
     @Override
     protected int setLayout() {
         return R.layout.activity_main;
     }
 
     @Override
-    protected void bindView() {
-        mMainPresenter = new MainPresenter(new MainModel());
-        mMainPresenter.bindView(this);
-    }
-
-    @Override
-    protected void unbindView() {
-        mMainPresenter.unbindView();
+    protected MainPresenter createPresenter() {
+        return new MainPresenter(new MainModel());
     }
 
     @Override
@@ -57,27 +48,27 @@ public class MainActivity extends BaseActivity implements IMainView {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    if (!mMainPresenter.isFlashServiceRunning()) {
-                        mMainPresenter.alertFlash(); //先闪两下提示用户, 如权限被拦截可帮助调起权限授权供用户允许
-                        mMainPresenter.enableFlashService(MainActivity.this, isChecked);
+                    if (!mPresenter.isFlashServiceRunning()) {
+                        mPresenter.alertFlash(); //先闪两下提示用户, 如权限被拦截可帮助调起权限授权供用户允许
+                        mPresenter.enableFlashService(MainActivity.this, isChecked);
                     }
                 } else {
-                    mMainPresenter.enableFlashService(MainActivity.this, isChecked);
+                    mPresenter.enableFlashService(MainActivity.this, isChecked);
                 }
             }
         });
         mSwitchBootRun.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mMainPresenter.setBootRun(isChecked);
+                mPresenter.setBootRun(isChecked);
             }
         });
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-        mSwitchEnableFlash.setChecked(mMainPresenter.isFlashServiceRunning());
-        mSwitchBootRun.setChecked(mMainPresenter.isBootRun());
+        mSwitchEnableFlash.setChecked(mPresenter.isFlashServiceRunning());
+        mSwitchBootRun.setChecked(mPresenter.isBootRun());
     }
 
 
@@ -85,7 +76,7 @@ public class MainActivity extends BaseActivity implements IMainView {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fab:
-                mMainPresenter.enableFlashlight(!FlashlightUtil.sState);
+                mPresenter.enableFlashlight(!FlashlightUtil.sState);
                 break;
         }
     }

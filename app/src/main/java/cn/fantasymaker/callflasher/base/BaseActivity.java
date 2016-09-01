@@ -31,13 +31,18 @@ import android.support.v7.app.AppCompatActivity;
  * Web     :  http://blog.fantasymaker.cn
  * Email   :  me@fantasymaker.cn
  */
-public abstract class BaseActivity extends AppCompatActivity{
+public abstract class BaseActivity<V extends IBaseView, P extends BasePresenterImpl> extends AppCompatActivity {
+
+    protected P mPresenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(setLayout());
-        bindView();
+        mPresenter = createPresenter();
+        if (!mPresenter.isViewBound()) {
+            mPresenter.bindView((V) this);
+        }
         initView();
         initData(savedInstanceState);
     }
@@ -45,7 +50,7 @@ public abstract class BaseActivity extends AppCompatActivity{
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unbindView();
+        mPresenter.unbindView();
     }
 
     /**
@@ -56,14 +61,11 @@ public abstract class BaseActivity extends AppCompatActivity{
     protected abstract int setLayout();
 
     /**
-     * 需要实现Presenter绑定View的过程
+     * 创建Presenter
+     *
+     * @return 实现类的presenter
      */
-    protected abstract void bindView();
-
-    /**
-     * 需要实现Presenter解绑View的过程
-     */
-    protected abstract void unbindView();
+    protected abstract P createPresenter();
 
     /**
      * 初始化控件

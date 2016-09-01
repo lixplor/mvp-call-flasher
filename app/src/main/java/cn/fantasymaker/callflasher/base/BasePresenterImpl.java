@@ -22,37 +22,38 @@
 
 package cn.fantasymaker.callflasher.base;
 
+import java.lang.ref.WeakReference;
+
 /**
- * Created :  2016-08-16
+ * Created :  2016-09-01
  * Author  :  Fantasymaker
  * Web     :  http://blog.fantasymaker.cn
  * Email   :  me@fantasymaker.cn
  */
-public interface IBasePresenter<V extends IBaseView> {
+public class BasePresenterImpl<V extends IBaseView> implements IBasePresenter<V> {
 
-    /**
-     * P绑定V
-     *
-     * @param v 要绑定的view
-     */
-    void bindView(V v);
+    private WeakReference<V> mVRef;
 
-    /**
-     * 断开P和V的关联, 避免内存泄漏
-     */
-    void unbindView();
+    @Override
+    public void bindView(V v) {
+        mVRef = new WeakReference<>(v);
+    }
 
-    /**
-     * 判断V是否已经绑定
-     *
-     * @return true绑定; 否则false
-     */
-    boolean isViewBound();
+    @Override
+    public void unbindView() {
+        if (mVRef != null) {
+            mVRef.clear();
+            mVRef = null;
+        }
+    }
 
-    /**
-     * 获取V
-     *
-     * @return 实现类view
-     */
-    V getView();
+    @Override
+    public boolean isViewBound() {
+        return mVRef != null && mVRef.get() != null;
+    }
+
+    @Override
+    public V getView() {
+        return mVRef.get();
+    }
 }
