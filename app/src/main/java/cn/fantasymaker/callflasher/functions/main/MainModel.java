@@ -20,13 +20,33 @@
  *     SOFTWARE.
  */
 
-package cn.fantasymaker.callflasher.base;
+package cn.fantasymaker.callflasher.functions.main;
+
+import cn.fantasymaker.callflasher.util.ServiceUtil;
+import cn.fantasymaker.callflasher.util.SharedpreferencesUtil;
 
 /**
- * Created :  2016-08-16
+ * Created :  2016-08-31
  * Author  :  Fantasymaker
  * Web     :  http://blog.fantasymaker.cn
  * Email   :  me@fantasymaker.cn
  */
-public interface IBaseView {
+public class MainModel implements MainContract.IMainModel {
+
+    private static final String KEY_BOOTRUN = "isBootRun";
+
+    @Override
+    public boolean isBootRun() {
+        return SharedpreferencesUtil.getBoolean(KEY_BOOTRUN, false);
+    }
+
+    @Override
+    public void setBootRun(boolean bootRun) {
+        SharedpreferencesUtil.putBoolean(KEY_BOOTRUN, bootRun);
+    }
+
+    @Override
+    public boolean isFlashServiceRunning() {
+        return ServiceUtil.isServiceRunning(FlashService.class);
+    }
 }

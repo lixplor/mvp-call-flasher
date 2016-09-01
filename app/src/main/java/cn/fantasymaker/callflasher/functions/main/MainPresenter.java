@@ -20,18 +20,17 @@
  *     SOFTWARE.
  */
 
-package cn.fantasymaker.callflasher.functions.main.presenter;
+package cn.fantasymaker.callflasher.functions.main;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.SystemClock;
 
-import cn.fantasymaker.callflasher.base.IBaseView;
-import cn.fantasymaker.callflasher.functions.main.FlashService;
-import cn.fantasymaker.callflasher.functions.main.view.IMainView;
+import cn.fantasymaker.callflasher.base.BasePresenterImpl;
+import cn.fantasymaker.callflasher.functions.main.MainContract.IMainModel;
+import cn.fantasymaker.callflasher.functions.main.MainContract.IMainPresenter;
+import cn.fantasymaker.callflasher.functions.main.MainContract.IMainView;
 import cn.fantasymaker.callflasher.util.FlashlightUtil;
-import cn.fantasymaker.callflasher.util.ServiceUtil;
-import cn.fantasymaker.callflasher.util.SharedpreferencesUtil;
 
 /**
  * Created :  2016-08-16
@@ -39,18 +38,12 @@ import cn.fantasymaker.callflasher.util.SharedpreferencesUtil;
  * Web     :  http://blog.fantasymaker.cn
  * Email   :  me@fantasymaker.cn
  */
-public class MainPresenter implements IMainPresenter {
+public class MainPresenter extends BasePresenterImpl<IMainView> implements IMainPresenter {
 
-    private IMainView mMainView;
+    private IMainModel mMainModel;
 
-    @Override
-    public void bindView(IBaseView v) {
-        mMainView = (IMainView) v;
-    }
-
-    @Override
-    public void unbindView() {
-        mMainView = null;
+    public MainPresenter(IMainModel iMainModel) {
+        mMainModel = iMainModel;
     }
 
     @Override
@@ -62,7 +55,7 @@ public class MainPresenter implements IMainPresenter {
             // TODO: 16/8/17 主线程提示用户无法打开相机闪光灯
         }
         String state = enable ? "开启" : "关闭";
-        mMainView.showSnackMessage("手电筒" + state);
+        getView().showSnackMessage("手电筒" + state);
     }
 
     @Override
@@ -94,26 +87,26 @@ public class MainPresenter implements IMainPresenter {
     public void enableFlashService(Context context, boolean enable) {
         Intent intent = new Intent(context, FlashService.class);
         if (enable) {
-            mMainView.showSnackMessage("开启来电闪光功能");
+            getView().showSnackMessage("开启来电闪光功能");
             context.startService(intent);
         } else {
-            mMainView.showSnackMessage("关闭来电闪光功能");
+            getView().showSnackMessage("关闭来电闪光功能");
             context.stopService(intent);
         }
     }
 
     @Override
     public boolean isFlashServiceRunning() {
-        return ServiceUtil.isServiceRunning(FlashService.class);
+        return mMainModel.isFlashServiceRunning();
     }
 
     @Override
     public boolean isBootRun() {
-        return SharedpreferencesUtil.getBoolean("isBootRun", false);
+        return mMainModel.isBootRun();
     }
 
     @Override
     public void setBootRun(boolean isBootRun) {
-        SharedpreferencesUtil.putBoolean("isBootRun", isBootRun);
+        mMainModel.setBootRun(isBootRun);
     }
 }

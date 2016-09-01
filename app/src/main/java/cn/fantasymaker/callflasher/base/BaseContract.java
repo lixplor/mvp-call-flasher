@@ -20,22 +20,56 @@
  *     SOFTWARE.
  */
 
-package cn.fantasymaker.callflasher.functions.main.view;
-
-import cn.fantasymaker.callflasher.base.IBaseView;
+package cn.fantasymaker.callflasher.base;
 
 /**
- * Created :  2016-08-16
+ * Created :  2016-09-01
  * Author  :  Fantasymaker
  * Web     :  http://blog.fantasymaker.cn
  * Email   :  me@fantasymaker.cn
  */
-public interface IMainView extends IBaseView {
+public interface BaseContract {
 
-    /**
-     * 显示Snackbar消息
-     *
-     * @param message 消息
-     */
-    void showSnackMessage(String message);
+    interface IBaseModel {
+
+    }
+
+    interface IBaseView<P> {
+
+        /**
+         * 创建Presenter
+         *
+         * @return 实现类的presenter
+         */
+        P createPresenter();
+    }
+
+    interface IBasePresenter<V> {
+
+        /**
+         * P绑定V
+         *
+         * @param v 要绑定的view
+         */
+        void bindView(V v);
+
+        /**
+         * 断开P和V的关联, 避免内存泄漏
+         */
+        void unbindView();
+
+        /**
+         * 判断V是否已经绑定
+         *
+         * @return true绑定; 否则false
+         */
+        boolean isViewBound();
+
+        /**
+         * 获取V
+         *
+         * @return 实现类view
+         */
+        V getView();
+    }
 }

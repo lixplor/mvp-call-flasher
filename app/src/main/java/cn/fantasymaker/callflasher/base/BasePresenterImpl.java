@@ -20,57 +20,41 @@
  *     SOFTWARE.
  */
 
-package cn.fantasymaker.callflasher.functions.main.presenter;
+package cn.fantasymaker.callflasher.base;
 
-import android.content.Context;
-
-import cn.fantasymaker.callflasher.base.IBasePresenter;
+import java.lang.ref.WeakReference;
+import cn.fantasymaker.callflasher.base.BaseContract.IBasePresenter;
 
 /**
- * Created :  2016-08-16
+ * Created :  2016-09-01
  * Author  :  Fantasymaker
  * Web     :  http://blog.fantasymaker.cn
  * Email   :  me@fantasymaker.cn
  */
-public interface IMainPresenter extends IBasePresenter {
+public class BasePresenterImpl<V> implements IBasePresenter<V> {
 
-    /**
-     * 开启/关闭闪光灯常亮
-     *
-     * @param enable true开启; 否则false
-     */
-    void enableFlashlight(boolean enable);
+    private WeakReference<V> mVRef;
 
-    /**
-     * 闪烁提醒
-     */
-    void alertFlash();
+    @Override
+    public void bindView(V v) {
+        mVRef = new WeakReference<>(v);
+    }
 
-    /**
-     * 开启/关闭来电状态监听的前台服务
-     *
-     * @param enable true开启; false关闭
-     */
-    void enableFlashService(Context context, boolean enable);
+    @Override
+    public void unbindView() {
+        if (mVRef != null) {
+            mVRef.clear();
+            mVRef = null;
+        }
+    }
 
-    /**
-     * 来电闪服务是否正在运行
-     *
-     * @return true则正在运行; 否则false
-     */
-    boolean isFlashServiceRunning();
+    @Override
+    public boolean isViewBound() {
+        return mVRef != null && mVRef.get() != null;
+    }
 
-    /**
-     * 是否开机自动运行
-     *
-     * @return true则自动运行; 否则false
-     */
-    boolean isBootRun();
-
-    /**
-     * 设置是否开机启动
-     *
-     * @param isBootRun true则开机启动; 否则false
-     */
-    void setBootRun(boolean isBootRun);
+    @Override
+    public V getView() {
+        return mVRef.get();
+    }
 }
