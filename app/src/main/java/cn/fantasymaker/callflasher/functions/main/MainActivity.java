@@ -35,7 +35,7 @@ public class MainActivity extends BaseActivity<MainActivity, MainPresenter> impl
     }
 
     @Override
-    protected MainPresenter createPresenter() {
+    public MainPresenter createPresenter() {
         return new MainPresenter(new MainModel());
     }
 

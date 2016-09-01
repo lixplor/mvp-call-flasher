@@ -24,8 +24,6 @@ package cn.fantasymaker.callflasher.functions.main;
 
 import android.content.Context;
 
-import cn.fantasymaker.callflasher.base.IBaseView;
-
 /**
  * Created :  2016-09-01
  * Author  :  Fantasymaker
@@ -58,7 +56,7 @@ public interface MainContract {
         boolean isFlashServiceRunning();
     }
 
-    interface IMainView extends IBaseView {
+    interface IMainView {
 
         /**
          * 显示Snackbar消息

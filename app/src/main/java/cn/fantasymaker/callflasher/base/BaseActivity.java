@@ -24,6 +24,7 @@ package cn.fantasymaker.callflasher.base;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import cn.fantasymaker.callflasher.base.BaseContract.IBaseView;
 
 /**
  * Created :  2016-08-16
@@ -31,7 +32,7 @@ import android.support.v7.app.AppCompatActivity;
  * Web     :  http://blog.fantasymaker.cn
  * Email   :  me@fantasymaker.cn
  */
-public abstract class BaseActivity<V extends IBaseView, P extends BasePresenterImpl> extends AppCompatActivity {
+public abstract class BaseActivity<V, P extends BasePresenterImpl> extends AppCompatActivity implements IBaseView<P>{
 
     protected P mPresenter;
 
@@ -60,12 +61,12 @@ public abstract class BaseActivity<V extends IBaseView, P extends BasePresenterI
      */
     protected abstract int setLayout();
 
-    /**
-     * 创建Presenter
-     *
-     * @return 实现类的presenter
-     */
-    protected abstract P createPresenter();
+//    /**
+//     * 创建Presenter
+//     *
+//     * @return 实现类的presenter
+//     */
+//    protected abstract P createPresenter();
 
     /**
      * 初始化控件

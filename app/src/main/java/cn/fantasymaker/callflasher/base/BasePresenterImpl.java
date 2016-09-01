@@ -23,6 +23,7 @@
 package cn.fantasymaker.callflasher.base;
 
 import java.lang.ref.WeakReference;
+import cn.fantasymaker.callflasher.base.BaseContract.IBasePresenter;
 
 /**
  * Created :  2016-09-01
@@ -30,7 +31,7 @@ import java.lang.ref.WeakReference;
  * Web     :  http://blog.fantasymaker.cn
  * Email   :  me@fantasymaker.cn
  */
-public class BasePresenterImpl<V extends IBaseView> implements IBasePresenter<V> {
+public class BasePresenterImpl<V> implements IBasePresenter<V> {
 
     private WeakReference<V> mVRef;
 
